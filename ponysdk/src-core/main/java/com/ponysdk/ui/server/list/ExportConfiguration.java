@@ -34,9 +34,9 @@ import com.ponysdk.core.export.Exporter;
 
 public class ExportConfiguration<D> {
 
-    private final List<Exporter<D>> exporters = new ArrayList<Exporter<D>>();
+    protected final List<Exporter<D>> exporters = new ArrayList<Exporter<D>>();
 
-    private final Map<String, ExportableField> exportFields = new LinkedHashMap<String, ExportableField>();
+    protected final Map<String, ExportableField> exportFields = new LinkedHashMap<String, ExportableField>();
 
     public void addExporter(final Exporter<D> exporter) {
         exporters.add(exporter);

@@ -36,41 +36,41 @@ import com.ponysdk.ui.server.list.valueprovider.ValueProvider;
 
 public class ListColumnDescriptor<D, V> {
 
-    private static final Logger log = LoggerFactory.getLogger(ListColumnDescriptor.class);
+    protected static final Logger log = LoggerFactory.getLogger(ListColumnDescriptor.class);
 
-    private String caption;
+    protected String caption;
 
-    private HeaderCellRenderer headerCellRenderer;
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    private CellRenderer<D, V> cellRenderer = new ObjectCellRenderer();
+    protected HeaderCellRenderer headerCellRenderer;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private CellRenderer<D, V> subCellRenderer = new ObjectCellRenderer();
+    protected CellRenderer<D, V> cellRenderer = new ObjectCellRenderer();
 
-    private ValueProvider<D, V> valueProvider;
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    protected CellRenderer<D, V> subCellRenderer = new ObjectCellRenderer();
 
-    private boolean viewable = true;
+    protected ValueProvider<D, V> valueProvider;
 
-    private boolean isCustom = false;
+    protected boolean viewable = true;
 
-    private String width;
+    protected boolean isCustom = false;
+
+    protected String width;
 
     public ListColumnDescriptor() {}
 
-    public ListColumnDescriptor(String caption) {
+    public ListColumnDescriptor(final String caption) {
         this.caption = caption;
     }
 
-    public IsPWidget renderCell(int row, D data) {
+    public IsPWidget renderCell(final int row, final D data) {
         return renderCell(row, data, cellRenderer);
     }
 
-    public IsPWidget renderSubCell(int row, D data) {
+    public IsPWidget renderSubCell(final int row, final D data) {
         return renderCell(row, data, subCellRenderer);
     }
 
-    private IsPWidget renderCell(int row, D data, CellRenderer<D, V> renderer) {
+    protected IsPWidget renderCell(final int row, final D data, final CellRenderer<D, V> renderer) {
         V value;
         try {
             value = valueProvider.getValue(data);
@@ -86,19 +86,19 @@ public class ListColumnDescriptor<D, V> {
         return headerCellRenderer.render();
     }
 
-    public void setHeaderCellRenderer(HeaderCellRenderer headerCellRender) {
+    public void setHeaderCellRenderer(final HeaderCellRenderer headerCellRender) {
         this.headerCellRenderer = headerCellRender;
         if (caption == null) {
             caption = headerCellRender.getCaption();
         }
     }
 
-    public void setCellRenderer(CellRenderer<D, V> cellRenderer) {
+    public void setCellRenderer(final CellRenderer<D, V> cellRenderer) {
         if (cellRenderer == null) throw new RuntimeException("cellRender cannot be null");
         this.cellRenderer = cellRenderer;
     }
 
-    public void setValueProvider(ValueProvider<D, V> valueProvider) {
+    public void setValueProvider(final ValueProvider<D, V> valueProvider) {
         this.valueProvider = valueProvider;
     }
 
@@ -114,7 +114,7 @@ public class ListColumnDescriptor<D, V> {
         return subCellRenderer;
     }
 
-    public void setSubCellRenderer(CellRenderer<D, V> subCellRenderer) {
+    public void setSubCellRenderer(final CellRenderer<D, V> subCellRenderer) {
         this.subCellRenderer = subCellRenderer;
     }
 
@@ -122,7 +122,7 @@ public class ListColumnDescriptor<D, V> {
         return width;
     }
 
-    public void setWidth(String width) {
+    public void setWidth(final String width) {
         this.width = width;
     }
 
@@ -130,7 +130,7 @@ public class ListColumnDescriptor<D, V> {
         return caption;
     }
 
-    public void setViewable(boolean viewable) {
+    public void setViewable(final boolean viewable) {
         this.viewable = viewable;
     }
 
@@ -142,7 +142,7 @@ public class ListColumnDescriptor<D, V> {
         return isCustom;
     }
 
-    public void setCustom(boolean isCustom) {
+    public void setCustom(final boolean isCustom) {
         this.isCustom = isCustom;
     }
 

@@ -28,15 +28,15 @@ import java.util.List;
 
 public class ListConfiguration<T> {
 
-    private List<ListColumnDescriptor<T, ?>> columnDescriptors = new ArrayList<ListColumnDescriptor<T, ?>>();
+    protected List<ListColumnDescriptor<T, ?>> columnDescriptors = new ArrayList<ListColumnDescriptor<T, ?>>();
 
-    private String tableName;
+    protected String tableName;
 
     public String getTableName() {
         return tableName;
     }
 
-    public void setTableName(String tableName) {
+    public void setTableName(final String tableName) {
         this.tableName = tableName;
     }
 
@@ -44,11 +44,11 @@ public class ListConfiguration<T> {
         return columnDescriptors;
     }
 
-    public void setColumnDescriptors(List<ListColumnDescriptor<T, ?>> fields) {
+    public void setColumnDescriptors(final List<ListColumnDescriptor<T, ?>> fields) {
         this.columnDescriptors = fields;
     }
 
-    public void addColumnDescriptor(ListColumnDescriptor<T, ?> listColumnDescriptor) {
+    public void addColumnDescriptor(final ListColumnDescriptor<T, ?> listColumnDescriptor) {
         columnDescriptors.add(listColumnDescriptor);
     }
 }

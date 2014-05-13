@@ -27,27 +27,27 @@ import com.ponysdk.ui.server.basic.PPanel;
 
 public class ComplexListConfiguration<T> extends ListConfiguration<T> {
 
-    private int pageSize = 30;
+    protected int pageSize = 30;
 
-    private boolean formEnabled;// FormConfiguration with Layout ?
+    protected boolean formEnabled;// FormConfiguration with Layout ?
 
-    private PPanel formLayout;
+    protected PPanel formLayout;
 
-    private ExportConfiguration<T> exportConfiguration;
+    protected ExportConfiguration<T> exportConfiguration;
 
-    private boolean selectionColumnEnabled;
+    protected boolean selectionColumnEnabled;
 
-    private boolean showSubListColumnEnabled;
+    protected boolean showSubListColumnEnabled;
 
-    private boolean searchFormMustBeValid;
+    protected boolean searchFormMustBeValid;
 
-    private boolean customColumnEnabled;
+    protected boolean customColumnEnabled;
 
-    private Class<T> clas;
+    protected Class<T> clas;
 
-    private boolean showPreferences;
+    protected boolean showPreferences;
 
-    private ComplexListActivity<T> complexListActivity;
+    protected ComplexListActivity<T> complexListActivity;
 
     public boolean isSearchFormMustBeValid() {
         return searchFormMustBeValid;

@@ -27,11 +27,11 @@ import java.util.List;
 
 public class SelectionResult<T> {
 
-    private final SelectionMode selectionMode;
+    protected final SelectionMode selectionMode;
 
-    private final List<T> selectedData;
+    protected final List<T> selectedData;
 
-    public SelectionResult(SelectionMode selectionMode, List<T> selectedData) {
+    public SelectionResult(final SelectionMode selectionMode, final List<T> selectedData) {
         this.selectionMode = selectionMode;
         this.selectedData = selectedData;
     }

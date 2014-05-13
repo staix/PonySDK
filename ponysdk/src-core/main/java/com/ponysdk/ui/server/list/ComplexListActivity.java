@@ -121,7 +121,7 @@ import com.ponysdk.ui.terminal.basic.PHorizontalAlignment;
 public class ComplexListActivity<D> extends AbstractActivity implements PagingSelectionChangeHandler, SortColumnHandler, ComparatorTypeChangeHandler, RefreshListHandler, ShowSubListHandler<D>, ShowCustomColumnDescriptorFormHandler,
         ShowColumnDescriptorHandler, MoveColumnDescriptorHandler, RemoveColumnDescriptorHandler, AddCustomColumnDescriptorHandler {
 
-    private SimpleListActivity<D> simpleListActivity;
+    protected SimpleListActivity<D> simpleListActivity;
 
     protected final ComplexListView complexListView;
 
@@ -129,25 +129,25 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
 
     protected final List<ListColumnDescriptor<D, ?>> listColumnDescriptors;
 
-    private SimpleDateFormat dateFormater = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
+    protected SimpleDateFormat dateFormater = new SimpleDateFormat("d MMM yyyy HH:mm:ss");
 
-    private final Map<Criterion, FormField> formFieldsByCriterionFields = new HashMap<Criterion, FormField>();
+    protected final Map<Criterion, FormField> formFieldsByCriterionFields = new HashMap<Criterion, FormField>();
 
-    private final Map<String, Criterion> criterionByPojoProperty = new HashMap<String, Criterion>();
+    protected final Map<String, Criterion> criterionByPojoProperty = new HashMap<String, Criterion>();
 
-    private PagingActivity pagingActivity;
+    protected PagingActivity pagingActivity;
 
     protected final ComplexListConfiguration<D> complexListConfiguration;
 
-    private final Map<String, ColumnDescriptorFieldHolder> customDescriptorHolderByCaption = new HashMap<String, ColumnDescriptorFieldHolder>();
+    protected final Map<String, ColumnDescriptorFieldHolder> customDescriptorHolderByCaption = new HashMap<String, ColumnDescriptorFieldHolder>();
 
     protected LinkedHashMap<String, ListColumnDescriptor<?, ?>> descriptorsByCaption = new LinkedHashMap<String, ListColumnDescriptor<?, ?>>();
 
-    private FormActivity searchFormActivity;
+    protected FormActivity searchFormActivity;
 
-    private SortingType currentSortingType = SortingType.NONE;
+    protected SortingType currentSortingType = SortingType.NONE;
 
-    private String currentSortingPojoPropertyKey;
+    protected String currentSortingPojoPropertyKey;
 
     protected int currentPage;
 
@@ -159,27 +159,27 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
 
     protected boolean rowSelectorAction;
 
-    private final EventBus localEventBus;
+    protected final EventBus localEventBus;
 
-    private EventBus eventBus; // use to forward ShowSubListEvent
+    protected EventBus eventBus; // use to forward ShowSubListEvent
 
-    private PMenuItem refreshButton;
+    protected PMenuItem refreshButton;
 
-    private PMenuItem resetButton;
+    protected PMenuItem resetButton;
 
-    private String debugID;
+    protected String debugID;
 
-    private Result<List<D>> findResult;
+    protected Result<List<D>> findResult;
 
-    private final Set<D> selectedAndEnabledData = new HashSet<D>();
+    protected final Set<D> selectedAndEnabledData = new HashSet<D>();
 
-    private final Set<D> selectedAndDisabledData = new HashSet<D>();
+    protected final Set<D> selectedAndDisabledData = new HashSet<D>();
 
-    private SelectionMode selectionMode = SelectionMode.NONE;
+    protected SelectionMode selectionMode = SelectionMode.NONE;
 
-    private int beforeIndex = -1;
+    protected int beforeIndex = -1;
 
-    private ShowCustomColumnDescriptorFormHandler columnDescriptorFormHandler = new SHowCustomColumnDescriptorFormHandlerImpl();
+    protected ShowCustomColumnDescriptorFormHandler columnDescriptorFormHandler = new SHowCustomColumnDescriptorFormHandlerImpl();
 
     public ComplexListActivity(final ComplexListConfiguration<D> complexListConfiguration, final ComplexListView complexListView) {
         this(complexListConfiguration, complexListView, null);
@@ -217,7 +217,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         this.simpleListActivity = new SimpleListActivity<D>(complexListConfiguration.getTableName(), complexListView, listColumnDescriptors, localEventBus);
     }
 
-    private void initEventBus(final ListColumnDescriptor<D, ?> columnDescriptor) {
+    protected void initEventBus(final ListColumnDescriptor<D, ?> columnDescriptor) {
         if (columnDescriptor.getHeaderCellRenderer() instanceof EventBusAware) {
             ((EventBusAware) columnDescriptor.getHeaderCellRenderer()).setEventBus(localEventBus);
         }
@@ -226,11 +226,11 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         }
     }
 
-    private class PRowCheckBox extends PCheckBox {
+    protected class PRowCheckBox extends PCheckBox {
 
-        private int row;
+        protected int row;
 
-        private int datasize;
+        protected int datasize;
 
         public void setRow(final int row) {
             this.row = row;
@@ -256,7 +256,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
 
     }
 
-    private ListColumnDescriptor<D, Boolean> getSelectableRow() {
+    protected ListColumnDescriptor<D, Boolean> getSelectableRow() {
         final ListColumnDescriptor<D, Boolean> listColumnDescriptor = new ListColumnDescriptor<D, Boolean>();
         listColumnDescriptor.setValueProvider(new BooleanValueProvider<D>(false));
         listColumnDescriptor.setSubCellRenderer(new EmptyCellRenderer<D, Boolean>());
@@ -355,7 +355,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         return listColumnDescriptor;
     }
 
-    private void triggerMainCheckBoxValueChange(final Boolean value) {
+    protected void triggerMainCheckBoxValueChange(final Boolean value) {
         if (!rowSelectorAction) {
             mainSelectorAction = true;
             mainCheckboxChanged(value);
@@ -363,7 +363,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         }
     }
 
-    private void mainCheckboxChanged(final Boolean value) {
+    protected void mainCheckboxChanged(final Boolean value) {
         changeRowSelectorsState(value);
         if (value) {
             showSelectAllOption();
@@ -378,7 +378,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         // rowSelectorAction = false;
     }
 
-    private void showSelectAllOption() {
+    protected void showSelectAllOption() {
         final PHorizontalPanel panel = new PHorizontalPanel();
         panel.setHorizontalAlignment(PHorizontalAlignment.ALIGN_CENTER);
         panel.setStyleName("pony-ComplexList-OptionSelectionPanel");
@@ -402,7 +402,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         complexListView.getTopListLayout().setWidget(panel);
     }
 
-    private void showClearSelectAllOption() {
+    protected void showClearSelectAllOption() {
         final PHorizontalPanel panel = new PHorizontalPanel();
         panel.setHorizontalAlignment(PHorizontalAlignment.ALIGN_CENTER);
         panel.setStyleName("pony-ComplexList-OptionSelectionPanel");
@@ -422,11 +422,11 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         complexListView.getTopListLayout().setWidget(panel);
     }
 
-    private void hideSelectAllOption() {
+    protected void hideSelectAllOption() {
         complexListView.getTopListLayout().setWidget(new PHTML());
     }
 
-    private ListColumnDescriptor<D, String> getShowSubListRow() {
+    protected ListColumnDescriptor<D, String> getShowSubListRow() {
 
         final ListColumnDescriptor<D, String> listColumnDescriptor = new ListColumnDescriptor<D, String>();
         listColumnDescriptor.setValueProvider(new ValueProvider<D, String>() {
@@ -454,7 +454,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         return listColumnDescriptor;
     }
 
-    private void buildSearchForm() {
+    protected void buildSearchForm() {
         if (complexListConfiguration.isEnableForm()) {
             PPanel formLayout = complexListConfiguration.getFormLayout();
             if (formLayout == null) {
@@ -470,7 +470,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         }
     }
 
-    private void buildPaging() {
+    protected void buildPaging() {
         final PagingView pagingView = new MenuBarPagingView();
         pagingActivity = new PagingActivity(pagingView);
         pagingActivity.setPageSize(complexListConfiguration.getPageSize());
@@ -478,7 +478,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         pagingActivity.start(complexListView.getPagingLayout());
     }
 
-    private void buildActions() {
+    protected void buildActions() {
         final PMenuBar actionBar = new PMenuBar();
         actionBar.setStyleName("pony-ActionToolbar");
 
@@ -838,19 +838,19 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         this.simpleListActivity.unSelectRow(row);
     }
 
-    private void enableRowCheckBox(final int row, final boolean enabled) {
+    protected void enableRowCheckBox(final int row, final boolean enabled) {
         final PRowCheckBox checkBox = rowSelectors.get(row);
         if (checkBox == null) return;
         checkBox.setEnabled(enabled);
     }
 
-    private void selectRowCheckBox(final int row) {
+    protected void selectRowCheckBox(final int row) {
         final PRowCheckBox checkBox = rowSelectors.get(row);
         if (checkBox == null) return;
         checkBox.setValue(true);
     }
 
-    private void unselectRowCheckBox(final int row) {
+    protected void unselectRowCheckBox(final int row) {
         final PRowCheckBox checkBox = rowSelectors.get(row);
         if (checkBox == null) return;
         checkBox.setValue(false);
@@ -872,7 +872,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
         }
     }
 
-    private void buildPreferences() {
+    protected void buildPreferences() {
         final PMenuBar menuBar = new PMenuBar();
         final PMenuBar menuBarAction = new PMenuBar(true);
         menuBar.addItem("Preferences", menuBarAction);
@@ -955,7 +955,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
 
     }
 
-    private class SHowCustomColumnDescriptorFormHandlerImpl implements ShowCustomColumnDescriptorFormHandler {
+    protected class SHowCustomColumnDescriptorFormHandlerImpl implements ShowCustomColumnDescriptorFormHandler {
 
         @Override
         public void onShowCustomColumnDescriptorForm(final ShowCustomColumnDescriptorFormEvent event) {
@@ -987,7 +987,7 @@ public class ComplexListActivity<D> extends AbstractActivity implements PagingSe
 
     }
 
-    private void rebuildSimpleList() {
+    protected void rebuildSimpleList() {
         if (findResult != null) {
             simpleListActivity.rebuild(listColumnDescriptors, findResult.getData());
         } else simpleListActivity.rebuild(listColumnDescriptors, null);
